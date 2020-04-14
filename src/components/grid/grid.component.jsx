@@ -4,13 +4,20 @@ import { stringToNumber } from "../../utils/grid.utils";
 class Grid extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { currentMarker: "X", message: null };
+    this.state = {
+      currentMarker: "X",
+      message: null,
+      playerOne: "Sumoz",
+      playerTwo: "Sanjana",
+    };
     this.grid = [
       ["", "", ""],
       ["", "", ""],
       ["", "", ""],
     ];
     this.count = 0;
+
+    this.inputRef = React.createRef();
   }
 
   checkequals = (a, b, c) => {
@@ -56,7 +63,9 @@ class Grid extends React.Component {
       if (this.checkequals(this.grid[i][0], this.grid[i][1], this.grid[i][2])) {
         this.setState({
           ...this.state,
-          message: `Winner of the Tic Tac Toe is ${this.grid[i][0]}`,
+          message: `Winner of the Tic Tac Toe is ${this.checkCurrentPlayer(
+            this.grid[i][0]
+          )}`,
         });
         this.disableBoxes();
         return;
@@ -66,7 +75,9 @@ class Grid extends React.Component {
       if (this.checkequals(this.grid[0][i], this.grid[1][i], this.grid[2][i])) {
         this.setState({
           ...this.state,
-          message: `Winner of the Tic Tac Toe is ${this.grid[0][i]}`,
+          message: `Winner of the Tic Tac Toe is ${this.checkCurrentPlayer(
+            this.grid[0][i]
+          )}`,
         });
         this.disableBoxes();
         return;
@@ -77,7 +88,9 @@ class Grid extends React.Component {
     if (this.checkequals(this.grid[0][0], this.grid[1][1], this.grid[2][2])) {
       this.setState({
         ...this.state,
-        message: `Winner of the Tic Tac Toe is ${this.grid[0][0]}`,
+        message: `Winner of the Tic Tac Toe is ${this.checkCurrentPlayer(
+          this.grid[0][0]
+        )}`,
       });
       this.disableBoxes();
       return;
@@ -89,11 +102,19 @@ class Grid extends React.Component {
     ) {
       this.setState({
         ...this.state,
-        message: `Winner of the Tic Tac Toe is ${this.grid[0][2]}`,
+        message: `Winner of the Tic Tac Toe is ${this.checkCurrentPlayer(
+          this.grid[0][2]
+        )}`,
       });
       this.disableBoxes();
       return;
     }
+  };
+
+  checkCurrentPlayer = (marker) => {
+    let currentPlayer =
+      marker === "X" ? this.state.playerOne : this.state.playerTwo;
+    return currentPlayer;
   };
 
   handleRefresh = () => {
@@ -116,8 +137,25 @@ class Grid extends React.Component {
         );
       }
     }
+    let currentPlayer = this.checkCurrentPlayer(this.state.currentMarker);
+
     return (
       <div className="grid">
+        <input
+          type="text"
+          ref={this.inputRef}
+          defaultValue={`Player 1`}
+          onSelect={() => (this.inputRef.current.value = "")}
+          placeholder="Enter player 1"
+        />
+        <input
+          type="text"
+          defaultValue={`Player 2`}
+          ref={this.inputRef}
+          onSelect={() => (this.inputRef.current.value = "")}
+          placeholder="Enter player 2"
+        />
+        {/* <button onClick={this.handleStartGame}>start</button> */}
         <div className="grid-container">{boxHolder}</div>
         {this.state.message ? (
           <div className="message-container">
@@ -132,7 +170,7 @@ class Grid extends React.Component {
           </div>
         ) : (
           <div className="message-container">
-            <div className="message">{`Your Turn player ${this.state.currentMarker}`}</div>
+            <div className="message">{`Your Turn player ${currentPlayer} ${this.state.currentMarker}`}</div>
             <button
               onClick={this.handleRefresh}
               className="play-again"
