@@ -12,6 +12,7 @@ class Header extends React.Component {
               type="text"
               className="player-inputbox"
               ref={inputXRef}
+              maxLength={10}
               defaultValue={`Player 1`}
               placeholder="Enter player 1"
             />
@@ -19,6 +20,7 @@ class Header extends React.Component {
               type="text"
               className="player-inputbox"
               defaultValue={`Player 2`}
+              maxLength={10}
               ref={inputORef}
               placeholder="Enter player 2"
             />

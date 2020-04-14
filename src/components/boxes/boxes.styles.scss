@@ -6,6 +6,10 @@
   align-items: center;
   font-size: 5rem;
   border-radius: 10px;
+  transition: transform 0.2s ease;
+  &:hover {
+    transform: scale(1.02);
+  }
 }
 
 .grid-container {
