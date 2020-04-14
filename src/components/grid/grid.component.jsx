@@ -9,6 +9,7 @@ class Grid extends React.Component {
       message: null,
       playerOne: "Sumoz",
       playerTwo: "Sanjana",
+      disbale: true,
     };
     this.grid = [
       ["", "", ""],
@@ -139,6 +140,7 @@ class Grid extends React.Component {
     }
     let currentPlayer = this.checkCurrentPlayer(this.state.currentMarker);
 
+    let gridStyle = this.state.disbale ? "grid-container-cover" : null;
     return (
       <div className="grid">
         <input
@@ -156,7 +158,12 @@ class Grid extends React.Component {
           placeholder="Enter player 2"
         />
         {/* <button onClick={this.handleStartGame}>start</button> */}
-        <div className="grid-container">{boxHolder}</div>
+
+        <div className="grid-wrapper">
+          <div className={gridStyle}></div>
+          <div className={`grid-container`}>{boxHolder}</div>
+        </div>
+
         {this.state.message ? (
           <div className="message-container">
             <div className="message">{this.state.message}</div>
