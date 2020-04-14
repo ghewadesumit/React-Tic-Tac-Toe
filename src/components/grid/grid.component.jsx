@@ -1,6 +1,9 @@
 import React from "react";
 import "./grid.styles.scss";
 import { stringToNumber } from "../../utils/grid.utils";
+import Boxes from "../boxes/boxes.component";
+import MessageBox from "../message/message.component";
+import Header from "../Header/header.component";
 
 class Grid extends React.Component {
   constructor(props) {
@@ -10,7 +13,7 @@ class Grid extends React.Component {
       message: null,
       playerX: null,
       playerO: null,
-      disbale: true,
+      disable: true,
     };
     this.grid = [
       ["", "", ""],
@@ -116,12 +119,7 @@ class Grid extends React.Component {
   checkCurrentPlayer = (marker) => {
     let currentPlayer =
       marker === "X" ? this.state.playerX : this.state.playerO;
-    console.log("current player is", currentPlayer);
     return currentPlayer;
-  };
-
-  handleRefresh = () => {
-    window.location.reload();
   };
 
   handleStartGame = () => {
@@ -129,92 +127,32 @@ class Grid extends React.Component {
     let playerOName = this.inputPlayerORef.current.value;
     this.setState({
       ...this.state,
-      disbale: false,
+      disable: false,
       playerX: playerXName,
       playerO: playerOName,
     });
   };
-
-  setPlayerName = () => {
-    let playerXName = this.inputPlayerXRef.current.value;
-    let playerOName = this.inputPlayerORef.current.value;
-    this.setState({
-      ...this.state,
-      playerX: playerXName,
-      playerO: playerOName,
-    });
-  };
-
-  componentDidMount() {
-    this.setPlayerName();
-  }
 
   render() {
-    const { playerX, playerO } = this.state;
-    console.log(`players are ${playerX} and ${playerO}`);
-    let boxHolder = [];
-    let boxId = "";
-    for (let i = 0; i < 3; i++) {
-      for (let j = 0; j < 3; j++) {
-        boxId = `${i}${j}`;
-        boxHolder.push(
-          <div
-            key={boxId}
-            onClick={this.handleClick}
-            className="box"
-            id={boxId}
-          ></div>
-        );
-      }
-    }
-    let currentPlayer = this.checkCurrentPlayer(this.state.currentMarker);
+    const { message, currentMarker, disable } = this.state;
 
-    let gridStyle = this.state.disbale ? "grid-container-cover" : null;
-
+    let currentPlayer = this.checkCurrentPlayer(currentMarker);
+    let gridStyle = disable ? "grid-container-cover" : null;
     return (
-      <div className="grid">
-        <input
-          type="text"
-          ref={this.inputPlayerXRef}
-          defaultValue={`Player 1`}
-          placeholder="Enter player 1"
+      <div className="main-container">
+        <Header
+          startGame={this.handleStartGame}
+          inputXRef={this.inputPlayerXRef}
+          inputORef={this.inputPlayerORef}
         />
-        <input
-          type="text"
-          defaultValue={`Player 2`}
-          ref={this.inputPlayerORef}
-          placeholder="Enter player 2"
-        />
-        <button onClick={this.handleStartGame}>start</button>
-
-        <div className="grid-wrapper">
-          <div className={gridStyle}></div>
-          <div className={`grid-container`}>{boxHolder}</div>
+        <div className="grid">
+          <Boxes gridStyle={gridStyle} clickBox={this.handleClick} />
+          <MessageBox
+            messageStatement={message}
+            currentPlayer={currentPlayer}
+            currentMarker={currentMarker}
+          />
         </div>
-
-        {this.state.message ? (
-          <div className="message-container">
-            <div className="message">{this.state.message}</div>
-            <button
-              onClick={this.handleRefresh}
-              className="play-again"
-              style={{ visibility: "visible" }}
-            >
-              Play Again
-            </button>
-          </div>
-        ) : (
-          <div className="message-container">
-            <div className="message">{`Your Turn player ${currentPlayer} ${this.state.currentMarker}`}</div>
-            <button
-              onClick={this.handleRefresh}
-              className="play-again"
-              style={{ visibility: "hidden" }}
-            >
-              Play Again
-            </button>
-          </div>
-        )}
       </div>
     );
   }
