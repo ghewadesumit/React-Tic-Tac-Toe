@@ -124,8 +124,19 @@ class Grid extends React.Component {
   };
 
   handleStartGame = () => {
+    this.setPlayerName();
     this.setState({ ...this.state, disbale: false });
   };
+
+  setPlayerName = () => {
+    let playerXName = this.inputPlayerXRef.current.value;
+    let playerOName = this.inputPlayerORef.current.value;
+    this.setState({ ...this.state, playerX: playerXName, playerOName });
+  };
+
+  componentDidMount() {
+    this.setPlayerName();
+  }
 
   render() {
     let boxHolder = [];
@@ -153,14 +164,12 @@ class Grid extends React.Component {
           type="text"
           ref={this.inputPlayerXRef}
           defaultValue={`Player 1`}
-          onSelect={() => (this.inputPlayerXRef.current.value = "")}
           placeholder="Enter player 1"
         />
         <input
           type="text"
           defaultValue={`Player 2`}
           ref={this.inputPlayerORef}
-          onSelect={() => (this.inputPlayerORef.current.value = "")}
           placeholder="Enter player 2"
         />
         <button onClick={this.handleStartGame}>start</button>
