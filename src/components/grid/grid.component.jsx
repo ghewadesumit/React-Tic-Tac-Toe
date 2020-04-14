@@ -116,6 +116,7 @@ class Grid extends React.Component {
   checkCurrentPlayer = (marker) => {
     let currentPlayer =
       marker === "X" ? this.state.playerX : this.state.playerO;
+    console.log("current player is", currentPlayer);
     return currentPlayer;
   };
 
@@ -124,14 +125,24 @@ class Grid extends React.Component {
   };
 
   handleStartGame = () => {
-    this.setPlayerName();
-    this.setState({ ...this.state, disbale: false });
+    let playerXName = this.inputPlayerXRef.current.value;
+    let playerOName = this.inputPlayerORef.current.value;
+    this.setState({
+      ...this.state,
+      disbale: false,
+      playerX: playerXName,
+      playerO: playerOName,
+    });
   };
 
   setPlayerName = () => {
     let playerXName = this.inputPlayerXRef.current.value;
     let playerOName = this.inputPlayerORef.current.value;
-    this.setState({ ...this.state, playerX: playerXName, playerOName });
+    this.setState({
+      ...this.state,
+      playerX: playerXName,
+      playerO: playerOName,
+    });
   };
 
   componentDidMount() {
@@ -139,6 +150,8 @@ class Grid extends React.Component {
   }
 
   render() {
+    const { playerX, playerO } = this.state;
+    console.log(`players are ${playerX} and ${playerO}`);
     let boxHolder = [];
     let boxId = "";
     for (let i = 0; i < 3; i++) {
