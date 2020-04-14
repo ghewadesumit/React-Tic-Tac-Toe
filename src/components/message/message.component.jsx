@@ -5,7 +5,6 @@ class MessageBox extends React.Component {
     window.location.reload();
   };
   render() {
-    console.log(`Props are ${this.props}`);
     const { messageStatement, currentPlayer, currentMarker } = this.props;
     let playerData = currentPlayer
       ? `Your Turn ${currentPlayer} ${currentMarker}`
