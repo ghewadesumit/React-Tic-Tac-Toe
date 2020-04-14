@@ -1,0 +1,35 @@
+.message {
+  color: #74baca;
+  font-size: 40px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.message-container {
+  width: 950px;
+  height: 149px;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.play-again {
+  width: 125px;
+  height: 44px;
+  margin: 20px 0px;
+  border: none;
+  background: #87da78;
+  font-size: 18px;
+  text-transform: uppercase;
+  transition: transform 0.4s ease;
+  cursor: pointer;
+  border-radius: 30px;
+  outline: none;
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}

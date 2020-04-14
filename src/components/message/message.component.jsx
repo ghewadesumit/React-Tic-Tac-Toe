@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./message.styles.scss";
 class MessageBox extends React.Component {
   handleRefresh = () => {
     window.location.reload();

@@ -1,0 +1,35 @@
+.box {
+  display: block;
+  background: #ff9900;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 5rem;
+  border-radius: 10px;
+}
+
+.grid-container {
+  background: #000;
+  width: 400px;
+  height: 400px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  grid-gap: 1%;
+}
+
+.grid-wrapper {
+  position: relative;
+}
+.grid-container-cover {
+  position: absolute;
+  height: 400px;
+  width: 400px;
+  z-index: 100;
+  background-color: #ddd;
+  border-radius: 10px;
+  opacity: 0.8;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

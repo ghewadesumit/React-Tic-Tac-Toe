@@ -10,12 +10,14 @@ class Header extends React.Component {
           <div className="player-input-container">
             <input
               type="text"
+              className="player-inputbox"
               ref={inputXRef}
               defaultValue={`Player 1`}
               placeholder="Enter player 1"
             />
             <input
               type="text"
+              className="player-inputbox"
               defaultValue={`Player 2`}
               ref={inputORef}
               placeholder="Enter player 2"
