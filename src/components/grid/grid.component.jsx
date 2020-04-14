@@ -1,14 +1,16 @@
 import React from "react";
 import "./grid.styles.scss";
 import { stringToNumber } from "../../utils/grid.utils";
+
 class Grid extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentMarker: "X",
       message: null,
-      playerOne: "Sumoz",
-      playerTwo: "Sanjana",
+      playerX: null,
+      playerO: null,
+      disbale: true,
     };
     this.grid = [
       ["", "", ""],
@@ -16,8 +18,8 @@ class Grid extends React.Component {
       ["", "", ""],
     ];
     this.count = 0;
-
-    this.inputRef = React.createRef();
+    this.inputPlayerXRef = React.createRef();
+    this.inputPlayerORef = React.createRef();
   }
 
   checkequals = (a, b, c) => {
@@ -35,9 +37,9 @@ class Grid extends React.Component {
     event.target.style.pointerEvents = "none";
 
     if (currentMarker === "X") {
-      this.setState({ currentMarker: "O" });
+      this.setState({ ...this.state, currentMarker: "O" });
     } else {
-      this.setState({ currentMarker: "X" });
+      this.setState({ ...this.state, currentMarker: "X" });
     }
     this.count++;
     this.checkWinner();
@@ -113,12 +115,16 @@ class Grid extends React.Component {
 
   checkCurrentPlayer = (marker) => {
     let currentPlayer =
-      marker === "X" ? this.state.playerOne : this.state.playerTwo;
+      marker === "X" ? this.state.playerX : this.state.playerO;
     return currentPlayer;
   };
 
   handleRefresh = () => {
     window.location.reload();
+  };
+
+  handleStartGame = () => {
+    this.setState({ ...this.state, disbale: false });
   };
 
   render() {
@@ -139,24 +145,31 @@ class Grid extends React.Component {
     }
     let currentPlayer = this.checkCurrentPlayer(this.state.currentMarker);
 
+    let gridStyle = this.state.disbale ? "grid-container-cover" : null;
+
     return (
       <div className="grid">
         <input
           type="text"
-          ref={this.inputRef}
+          ref={this.inputPlayerXRef}
           defaultValue={`Player 1`}
-          onSelect={() => (this.inputRef.current.value = "")}
+          onSelect={() => (this.inputPlayerXRef.current.value = "")}
           placeholder="Enter player 1"
         />
         <input
           type="text"
           defaultValue={`Player 2`}
-          ref={this.inputRef}
-          onSelect={() => (this.inputRef.current.value = "")}
+          ref={this.inputPlayerORef}
+          onSelect={() => (this.inputPlayerORef.current.value = "")}
           placeholder="Enter player 2"
         />
-        {/* <button onClick={this.handleStartGame}>start</button> */}
-        <div className="grid-container">{boxHolder}</div>
+        <button onClick={this.handleStartGame}>start</button>
+
+        <div className="grid-wrapper">
+          <div className={gridStyle}></div>
+          <div className={`grid-container`}>{boxHolder}</div>
+        </div>
+
         {this.state.message ? (
           <div className="message-container">
             <div className="message">{this.state.message}</div>
