@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./boxes.styles.scss";
 const Boxes = (props) => {
   let boxHolder = [];
   let boxId = "";
