@@ -53,6 +53,12 @@ class Grid extends React.Component {
     boxElement.forEach((item) => (item.style.pointerEvents = "none"));
   };
 
+  shakeBoxes = (boxes) => {
+    for (let i of boxes) {
+      document.getElementById(`${i}`).classList.add("box-shake-animation");
+    }
+  };
+
   checkWinner = () => {
     if (this.count === 9) {
       this.setState({
@@ -60,6 +66,7 @@ class Grid extends React.Component {
         message: `its a Tie!!! no one won the game please try again`,
       });
       this.disableBoxes();
+      this.shakeBoxes([`00`, `01`, `02`, "10", "11", "12", "20", "21", "22"]);
       return;
     }
 
@@ -73,6 +80,7 @@ class Grid extends React.Component {
           )}`,
         });
         this.disableBoxes();
+        this.shakeBoxes([`${i}0`, `${i}1`, `${i}2`]);
         return;
       }
 
@@ -84,6 +92,7 @@ class Grid extends React.Component {
             this.grid[0][i]
           )}`,
         });
+        this.shakeBoxes([`0${i}`, `1${i}`, `2${i}`]);
         this.disableBoxes();
         return;
       }
@@ -98,6 +107,7 @@ class Grid extends React.Component {
         )}`,
       });
       this.disableBoxes();
+      this.shakeBoxes([`00`, `11`, `22`]);
       return;
     }
 
@@ -111,6 +121,7 @@ class Grid extends React.Component {
           this.grid[0][2]
         )}`,
       });
+      this.shakeBoxes([`02`, `11`, `20`]);
       this.disableBoxes();
       return;
     }
